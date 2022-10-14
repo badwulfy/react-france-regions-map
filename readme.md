@@ -30,3 +30,12 @@ const App = () => {
 
 export default App;
 ```
+
+## Run demo
+
+```bash
+git clone https://github.com/badwulfy/react-france-regions-map.git
+cd react-france-regions-map
+npm install
+npm run demo
+```
