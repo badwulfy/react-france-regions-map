@@ -2,7 +2,7 @@
 
 ## Demo
 
-![demo](demo.gif)]
+![demo](https://github.com/badwulfy/react-france-regions-map/blob/main/demo.gif?raw=true)
 
 ## Installation
 
