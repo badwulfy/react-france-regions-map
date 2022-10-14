@@ -6,7 +6,9 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "target": "es2016"
+    "target": "es2016",
+    "moduleResolution": "Node",
+    "jsx": "react"
   },
   "include": [
     "src"

@@ -1,5 +1,9 @@
 # React clickable france map
 
+## Demo
+
+![demo](demo.gif)]
+
 ## Installation
 
 ```bash

@@ -79,9 +79,15 @@ const FranceMap = ({
     const map = mapRef.current;
     if (!franceRegions || !map) return;
 
-    map.fitBounds(L.geoJSON(franceRegions).getBounds(), {
-      padding: [10, 10],
-    });
+    const fitMap = () =>
+      map.fitBounds(L.geoJSON(franceRegions).getBounds(), {
+        padding: [10, 10],
+      });
+
+    fitMap();
+
+    window.addEventListener("resize", fitMap);
+    return () => window.removeEventListener("resize", fitMap);
   }, [franceRegions, mapRef]);
 
   const getFeaureKey = (e: L.LeafletEvent) => {

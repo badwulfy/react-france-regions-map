@@ -10,16 +10,23 @@ const App = () => {
         width: "100vw",
         height: "100vh",
         display: "flex",
-        margin: 0,
-        padding: 0,
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <FranceMap
         initialSelection={selectedRegions}
-        onChange={setSelectedRegions}
+        onChange={(regions) => {
+          console.log(regions);
+          setSelectedRegions(regions);
+        }}
         selectColor="#4f34eb"
-        style={{ flex: 1 }}
+        style={{ flex: 1, width: "100%" }}
       />
+      <div>
+        Régions sélectionnées :{" "}
+        {selectedRegions.join(", ") || "Aucune région sélectionnée"}
+      </div>
     </div>
   );
 };
