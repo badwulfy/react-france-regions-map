@@ -9,6 +9,7 @@ import { GeoJSON, MapContainer } from "react-leaflet";
 import geojsonURL from "url:./france.geojson";
 import { useStableCallback } from "./util";
 
+// All France regions keys
 export type RegionKey =
   | "Auvergne-Rhône-Alpes"
   | "Hauts-de-France"
@@ -30,10 +31,10 @@ export type RegionKey =
   | "Mayotte";
 
 export interface FranceMapProps {
-  initialSelection?: RegionKey[];
-  onChange?: (region: RegionKey[]) => void;
-  selectColor?: string;
-  style?: React.CSSProperties;
+  initialSelection?: RegionKey[]; // Initial selected regions
+  onChange?: (region: RegionKey[]) => void; // Callback when selected regions change
+  selectColor?: string; // Color of selected regions and hover
+  style?: React.CSSProperties; // Style of the map container
 }
 
 const FranceMap = ({
@@ -42,18 +43,21 @@ const FranceMap = ({
   selectColor = "#fff494",
   style = {},
 }: FranceMapProps) => {
+  // style of unselected regions
   const LayerInitialStyle: PathOptions = {
     fillColor: selectColor,
     fillOpacity: 0.1,
     color: selectColor,
     weight: 2,
   };
+  // style of on hover regions
   const LayerHoverStyle: PathOptions = {
     fillColor: selectColor,
     fillOpacity: 0.5,
     color: selectColor,
     weight: 2,
   };
+  // style of selected regions
   const LayerSelectedStyle: PathOptions = {
     fillColor: selectColor,
     fillOpacity: 0.8,
@@ -61,13 +65,15 @@ const FranceMap = ({
     weight: 4,
   };
 
-  const [franceRegions, setFranceRegions] = React.useState(null);
+  // ref of leaflet map instance
   const mapRef = React.useRef<L.Map>(null);
 
+  const [franceRegions, setFranceRegions] = React.useState(null);
   const [selectedRegions, setSelectedRegions] =
     React.useState<RegionKey[]>(initialSelection);
 
   useEffect(() => {
+    // load france regions geojson
     fetch(geojsonURL)
       .then((response) => response.json())
       .then((data) => {
@@ -79,17 +85,22 @@ const FranceMap = ({
     const map = mapRef.current;
     if (!franceRegions || !map) return;
 
+    // function to fit map to france regions
     const fitMap = () =>
       map.fitBounds(L.geoJSON(franceRegions).getBounds(), {
         padding: [10, 10],
       });
 
+    // fit after map is loaded
     fitMap();
 
+    // fit after window is resized
     window.addEventListener("resize", fitMap);
+    // remove listener on unmount
     return () => window.removeEventListener("resize", fitMap);
   }, [franceRegions, mapRef]);
 
+  // get region key from event on geojson layer
   const getFeaureKey = (e: L.LeafletEvent) => {
     const layer = e.target as L.GeoJSON;
     if (!layer.feature) return "" as RegionKey;
@@ -99,6 +110,7 @@ const FranceMap = ({
     return key as RegionKey;
   };
 
+  // callback when a region is added to map
   const handleAdd = useStableCallback((e: L.LeafletEvent): void => {
     const key = getFeaureKey(e);
     // add or remove layer from selected regions
@@ -106,6 +118,7 @@ const FranceMap = ({
     else e.target.setStyle(LayerInitialStyle);
   });
 
+  // callback when a mouse enter a region
   const handleMouseHover = useStableCallback((e: L.LeafletMouseEvent): void => {
     const key = getFeaureKey(e);
 
@@ -113,6 +126,7 @@ const FranceMap = ({
     (e.target as L.GeoJSON).setStyle(LayerHoverStyle);
   });
 
+  // callback when a mouse leave a region
   const handleMouseOut = useStableCallback((e: L.LeafletMouseEvent): void => {
     const key = getFeaureKey(e);
 
@@ -120,6 +134,7 @@ const FranceMap = ({
     (e.target as L.GeoJSON).setStyle(LayerInitialStyle);
   });
 
+  // callback when a region is clicked
   const handleClick = useStableCallback((e: L.LeafletMouseEvent): void => {
     const key = getFeaureKey(e);
 
@@ -137,7 +152,7 @@ const FranceMap = ({
     }
   });
 
-  // colorize regions on hover
+  // add event listeners to geojson layer
   const onEachFeature = (_: Feature, layer: Layer) => {
     layer.on({
       add: handleAdd,
