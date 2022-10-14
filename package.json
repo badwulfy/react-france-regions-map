@@ -1,0 +1,49 @@
+{
+  "name": "react-france-regions-map",
+  "version": "0.1.2",
+  "private": false,
+  "description": "React component to display a map of France with selectable regions",
+  "author": "Badwulfy",
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "france",
+    "map",
+    "region",
+    "selectable",
+    "leaflet"
+  ],
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "leaflet": "^1.9.2",
+    "react": "^18.2.0",
+    "react-leaflet": "^4.1.0"
+  },
+  "devDependencies": {
+    "@glukki/parcel-plugin-geojson": "^0.0.1",
+    "@parcel/packager-ts": "^2.7.0",
+    "@parcel/transformer-typescript-types": "^2.7.0",
+    "@types/leaflet": "^1.8.0",
+    "@types/node": "^18.11.0",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "parcel": "^2.7.0",
+    "process": "^0.11.10",
+    "react-dom": "^18.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "<4.8"
+  },
+  "scripts": {
+    "demo": "parcel demo/public/index.html",
+    "build": "rimraf dist && parcel build src/index.ts"
+  },
+  "resolutions": {
+    "typescript": "~4.7"
+  }
+}
