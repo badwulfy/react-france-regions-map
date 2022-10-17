@@ -7,7 +7,7 @@
 ## Installation
 
 ```bash
-npm install react-clickable-france-map
+npm i react-france-regions-map
 ```
 
 ## Usage
