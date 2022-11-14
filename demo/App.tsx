@@ -20,8 +20,25 @@ const App = () => {
           console.log(regions);
           setSelectedRegions(regions);
         }}
-        selectColor="#4f34eb"
         style={{ flex: 1, width: "100%" }}
+        map="france-drom"
+        colors={{
+          default: {
+            color: "#4f34eb",
+            fillColor: "#4f34eb",
+            weight: 1,
+          },
+          hover: {
+            color: "#23badb",
+            fillColor: "#23badb",
+            weight: 2,
+          },
+          selected: {
+            color: "#82db23",
+            fillColor: "#82db23",
+            weight: 2,
+          },
+        }}
       />
       <div>
         Régions sélectionnées :{" "}

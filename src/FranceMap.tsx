@@ -6,8 +6,11 @@ import "leaflet/dist/leaflet.css";
 import { GeoJSON, MapContainer } from "react-leaflet";
 
 // @ts-ignore
-import geojsonURL from "url:./france.geojson";
+import franceDROMUrl from "url:./france-drom.geojson";
+// @ts-ignore
+import franceUrl from "url:./france.geojson";
 import { useStableCallback } from "./util";
+import _ from "lodash";
 
 // All France regions keys
 export type RegionKey =
@@ -33,37 +36,52 @@ export type RegionKey =
 export interface FranceMapProps {
   initialSelection?: RegionKey[]; // Initial selected regions
   onChange?: (region: RegionKey[]) => void; // Callback when selected regions change
-  selectColor?: string; // Color of selected regions and hover
   style?: React.CSSProperties; // Style of the map container
+  colors?: {
+    selected?: PathOptions;
+    hover?: PathOptions;
+    default?: PathOptions;
+  };
+  map?: "france" | "france-drom"; // Map to display
 }
 
 const FranceMap = ({
   initialSelection = [],
   onChange = () => {},
-  selectColor = "#fff494",
+  colors = {},
   style = {},
+  map = "france",
 }: FranceMapProps) => {
+  colors = _.merge(
+    {
+      default: {
+        fillColor: "#fff494",
+        color: "#fff494",
+        fillOpacity: 0.1,
+        weight: 2,
+      },
+      hover: {
+        fillColor: "#fff494",
+        color: "#fff494",
+        fillOpacity: 0.5,
+        weight: 2,
+      },
+      selected: {
+        fillColor: "#fff494",
+        color: "#fff494",
+        fillOpacity: 0.8,
+        weight: 4,
+      },
+    },
+    colors
+  );
+
   // style of unselected regions
-  const LayerInitialStyle: PathOptions = {
-    fillColor: selectColor,
-    fillOpacity: 0.1,
-    color: selectColor,
-    weight: 2,
-  };
+  const LayerInitialStyle = colors.default as PathOptions;
   // style of on hover regions
-  const LayerHoverStyle: PathOptions = {
-    fillColor: selectColor,
-    fillOpacity: 0.5,
-    color: selectColor,
-    weight: 2,
-  };
+  const LayerHoverStyle = colors.hover as PathOptions;
   // style of selected regions
-  const LayerSelectedStyle: PathOptions = {
-    fillColor: selectColor,
-    fillOpacity: 0.8,
-    color: selectColor,
-    weight: 4,
-  };
+  const LayerSelectedStyle = colors.selected as PathOptions;
 
   // ref of leaflet map instance
   const mapRef = React.useRef<L.Map>(null);
@@ -73,8 +91,10 @@ const FranceMap = ({
     React.useState<RegionKey[]>(initialSelection);
 
   useEffect(() => {
+    const url = map === "france" ? franceUrl : franceDROMUrl;
+
     // load france regions geojson
-    fetch(geojsonURL)
+    fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setFranceRegions(data);
@@ -183,14 +203,10 @@ const FranceMap = ({
       keyboard={false}
       attributionControl={false}
     >
-      <>
-        {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
-
-        {/* add the geojson layer to the map */}
-        {franceRegions && (
-          <GeoJSON data={franceRegions} onEachFeature={onEachFeature} />
-        )}
-      </>
+      {/* add the geojson layer to the map */}
+      {franceRegions && (
+        <GeoJSON data={franceRegions} onEachFeature={onEachFeature} />
+      )}
     </MapContainer>
   );
 };

@@ -12,27 +12,49 @@ npm i react-france-regions-map
 
 ## Usage
 
-```jsx
-import React from "react";
-import FranceMap from "react-france-regions-map";
+See `demo/App.tsx`
 
-const App = () => {
-  const [selectedRegions, setSelectedRegions] = React.useState([]);
-
-  return (
-    <FranceMap
-      initialSelection={selectedRegions}
-      onChange={(regions) => {
-        console.log("Selected regions", regions);
-        setSelectedRegions(regions);
-      }}
-      selectColor="#4f34eb"
-      style={{ width: "500px", height: "500px" }}
-    />
-  );
-};
-
-export default App;
+```javascript
+<div
+  style={{
+    width: "100vw",
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }}
+>
+  <FranceMap
+    initialSelection={selectedRegions}
+    onChange={(regions) => {
+      console.log(regions);
+      setSelectedRegions(regions);
+    }}
+    style={{ flex: 1, width: "100%" }}
+    map="france-drom"
+    colors={{
+      default: {
+        color: "#4f34eb",
+        fillColor: "#4f34eb",
+        weight: 1,
+      },
+      hover: {
+        color: "#23badb",
+        fillColor: "#23badb",
+        weight: 2,
+      },
+      selected: {
+        color: "#82db23",
+        fillColor: "#82db23",
+        weight: 2,
+      },
+    }}
+  />
+  <div>
+    Régions sélectionnées :{" "}
+    {selectedRegions.join(", ") || "Aucune région sélectionnée"}
+  </div>
+</div>
 ```
 
 ## Run demo
