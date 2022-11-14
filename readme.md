@@ -1,4 +1,4 @@
-# React clickable france map
+# React France Regions Map
 
 ## Demo
 
