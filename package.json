@@ -1,6 +1,6 @@
 {
   "name": "react-france-regions-map",
-  "version": "0.2",
+  "version": "0.2.0",
   "private": false,
   "description": "React component to display a map of France with selectable regions",
   "author": "Badwulfy",
