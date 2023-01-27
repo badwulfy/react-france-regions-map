@@ -34,8 +34,8 @@ const App = () => {
             weight: 2,
           },
           selected: {
-            color: "#82db23",
-            fillColor: "#82db23",
+            color: "#1b00b5",
+            fillColor: "#1b00b5",
             weight: 2,
           },
         }}

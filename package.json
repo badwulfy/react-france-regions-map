@@ -28,23 +28,21 @@
     "react-leaflet": "^4.1.0"
   },
   "devDependencies": {
-    "@glukki/parcel-plugin-geojson": "^0.0.1",
-    "@parcel/packager-ts": "^2.7.0",
-    "@parcel/transformer-typescript-types": "^2.7.0",
     "@types/leaflet": "^1.8.0",
     "@types/lodash": "^4.14.188",
     "@types/node": "^18.11.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-    "parcel": "^2.7.0",
     "process": "^0.11.10",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
-    "typescript": "<4.8"
+    "typescript": "<4.8",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "vite": "^4.0.4"
   },
   "scripts": {
-    "demo": "parcel demo/public/index.html",
-    "build": "rimraf dist && parcel build src/index.ts"
+    "demo": "vite --open / demo/index.jsx",
+    "build": "rimraf dist && vite build src/index.ts"
   },
   "resolutions": {
     "typescript": "~4.7"
