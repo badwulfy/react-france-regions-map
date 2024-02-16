@@ -5,8 +5,10 @@ import L, { Layer, PathOptions } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { GeoJSON, MapContainer } from "react-leaflet";
 
-const franceDROMUrl = new URL("./france-drom.geojson", import.meta.url).href;
-const franceUrl = new URL("./france.geojson", import.meta.url).href;
+// @ts-ignore
+import franceDROMUrl from "url:./france-drom.geojson";
+// @ts-ignore
+import franceUrl from "url:./france.geojson";
 import { useStableCallback } from "./util";
 import _ from "lodash";
 
